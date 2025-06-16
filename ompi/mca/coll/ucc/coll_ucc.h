@@ -43,6 +43,7 @@ struct mca_coll_ucc_component_t {
     int                             ucc_priority;
     int                             ucc_verbose;
     int                             ucc_enable;
+    int                             ucc_triggered;
     int                             ucc_np;
     char                           *cls;
     char                           *cts;

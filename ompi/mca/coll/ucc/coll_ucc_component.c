@@ -47,7 +47,8 @@ mca_coll_ucc_component_t mca_coll_ucc_component = {
     },
     10,               /* ucc_priority                */
     0,                 /* ucc_verbose                 */
-    0,                 /* ucc_enable                  */
+    1,                 /* ucc_enable                  */
+    0,                 /* ucc_triggered               */
     2,                 /* ucc_np                      */
     "basic",           /* cls                         */
     COLL_UCC_CTS_STR,  /* requested coll_types string */
@@ -72,6 +73,12 @@ static int mca_coll_ucc_register(void)
                                     MCA_BASE_VAR_TYPE_INT, NULL, 0, 0,
                                     OPAL_INFO_LVL_9,
                                     MCA_BASE_VAR_SCOPE_READONLY, &cm->ucc_enable);
+
+    mca_base_component_var_register(c, "triggered", 
+                                    "Decide weither non-blocking collective should be offloaded",
+                                    MCA_BASE_VAR_TYPE_INT, NULL, 0, 0,
+                                    OPAL_INFO_LVL_9,
+                                    MCA_BASE_VAR_SCOPE_READONLY, &cm->ucc_triggered);
 
     mca_base_component_var_register(c, "np", "Minimal communicator size for the UCC coll component",
                                     MCA_BASE_VAR_TYPE_INT, NULL, 0, 0,
