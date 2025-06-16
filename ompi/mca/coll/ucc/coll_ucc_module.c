@@ -88,10 +88,11 @@ static void mca_coll_ucc_module_destruct(mca_coll_ucc_module_t *ucc_module)
 #define SAVE_PREV_COLL_API(__api) do {                                                       \
         ucc_module->previous_ ## __api            = comm->c_coll->coll_ ## __api;            \
         ucc_module->previous_ ## __api ## _module = comm->c_coll->coll_ ## __api ## _module; \
-        if (!comm->c_coll->coll_ ## __api || !comm->c_coll->coll_ ## __api ## _module) {     \
+        if (comm->c_coll->coll_ ## __api && comm->c_coll->coll_ ## __api ## _module) {       \
+            OBJ_RETAIN(ucc_module->previous_ ## __api ## _module);                           \
+        } else {                                                                             \
             return OMPI_ERROR;                                                               \
         }                                                                                    \
-        OBJ_RETAIN(ucc_module->previous_ ## __api ## _module);                               \
     } while(0)
 
 static int mca_coll_ucc_save_coll_handlers(mca_coll_ucc_module_t *ucc_module)
