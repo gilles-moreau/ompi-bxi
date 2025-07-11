@@ -55,8 +55,9 @@ ucc_status_t mca_coll_ucc_scatter_init(const void *sbuf, size_t scount,
     }
 
     ucc_coll_args_t coll = {
-        .mask      = 0,
-        .flags     = 0,
+        .mask      = UCC_COLL_ARGS_FIELD_FLAGS,
+        .flags     = mca_coll_ucc_component.ucc_triggered ? 
+                       UCC_COLL_ARGS_FLAG_OFFLOAD_OPERATIONS : 0,
         .coll_type = UCC_COLL_TYPE_SCATTER,
         .root      = root,
         .src.info  = {
