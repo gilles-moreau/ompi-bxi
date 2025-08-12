@@ -642,6 +642,12 @@ int mca_pml_ucx_irecv(void *buf, size_t count, ompi_datatype_t *datatype,
     PML_UCX_TRACE_RECV("irecv request *%p", buf, count, datatype, src, tag, comm,
                        (void*)request);
 
+#if OPAL_PML_UCX_RECV_REPLYEP && HAVE_DECL_UCP_TAG_RECV_NBX
+    if (!(src == MPI_ANY_SOURCE)) {
+        param->reply_ep = mca_pml_ucx_get_ep(comm, src);
+    }
+#endif
+
     PML_UCX_MAKE_RECV_TAG(ucp_tag, ucp_tag_mask, tag, src, comm);
 #if HAVE_DECL_UCP_TAG_RECV_NBX
     req = (ompi_request_t*)ucp_tag_recv_nbx(ompi_pml_ucx.ucp_worker, buf,
@@ -686,6 +692,12 @@ int mca_pml_ucx_recv(void *buf, size_t count, ompi_datatype_t *datatype, int src
     int result;
 
     PML_UCX_TRACE_RECV("%s", buf, count, datatype, src, tag, comm, "recv");
+
+#if OPAL_PML_UCX_RECV_REPLYEP && HAVE_DECL_UCP_TAG_RECV_NBX
+    if (!(src == MPI_ANY_SOURCE)) {
+        param->reply_ep = mca_pml_ucx_get_ep(comm, src);
+    }
+#endif
 
     PML_UCX_MAKE_RECV_TAG(ucp_tag, ucp_tag_mask, tag, src, comm);
 #if HAVE_DECL_UCP_TAG_RECV_NBX
