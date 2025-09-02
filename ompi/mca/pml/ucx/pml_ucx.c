@@ -644,6 +644,7 @@ int mca_pml_ucx_irecv(void *buf, size_t count, ompi_datatype_t *datatype,
 
 #if OPAL_PML_UCX_RECV_REPLYEP && HAVE_DECL_UCP_TAG_RECV_NBX
     if (!(src == MPI_ANY_SOURCE)) {
+        param->op_attr_mask |= UCP_OP_ATTR_FIELD_EPH;
         param->reply_ep = mca_pml_ucx_get_ep(comm, src);
     }
 #endif
@@ -695,7 +696,8 @@ int mca_pml_ucx_recv(void *buf, size_t count, ompi_datatype_t *datatype, int src
 
 #if OPAL_PML_UCX_RECV_REPLYEP && HAVE_DECL_UCP_TAG_RECV_NBX
     if (!(src == MPI_ANY_SOURCE)) {
-        param->reply_ep = mca_pml_ucx_get_ep(comm, src);
+        param.op_attr_mask |= UCP_OP_ATTR_FIELD_EPH;
+        param.reply_ep = mca_pml_ucx_get_ep(comm, src);
     }
 #endif
 
