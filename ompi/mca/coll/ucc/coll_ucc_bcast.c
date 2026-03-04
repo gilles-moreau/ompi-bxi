@@ -22,7 +22,7 @@ static inline ucc_status_t mca_coll_ucc_bcast_init(void *buf, size_t count, stru
     ucc_coll_args_t coll = {
         .mask      = UCC_COLL_ARGS_FIELD_FLAGS,
         .flags     = mca_coll_ucc_component.ucc_triggered ? 
-                       UCC_COLL_ARGS_FLAG_OFFLOAD_OPERATIONS : 0,
+                       UCC_COLL_ARGS_FLAG_SCHEDULE_OPERATIONS : 0,
         .coll_type = UCC_COLL_TYPE_BCAST,
         .root = root,
         .src.info = {
