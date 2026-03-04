@@ -983,8 +983,7 @@ mca_pml_ucx_send_nbr(ucp_ep_h ep, const void *buf, size_t count,
     pml_ucx_datatype_t *op_data = mca_pml_ucx_get_op_data(datatype);
     ucp_request_param_t param   = {
         .op_attr_mask = UCP_OP_ATTR_FIELD_REQUEST |
-                        (op_data->op_param.send.op_attr_mask & UCP_OP_ATTR_FIELD_DATATYPE) |
-                        UCP_OP_ATTR_FLAG_FAST_CMPL,
+                        (op_data->op_param.send.op_attr_mask & UCP_OP_ATTR_FIELD_DATATYPE), //| UCP_OP_ATTR_FLAG_FAST_CMPL,
         .datatype     = op_data->op_param.send.datatype,
         .request      = req
     };
