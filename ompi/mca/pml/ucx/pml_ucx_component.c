@@ -83,7 +83,7 @@ static int mca_pml_ucx_component_register(void)
     ompi_pml_ucx.request_leak_check = true;
 #endif
 
-    ompi_pml_ucx.op_attr_nonblocking = 0;
+    ompi_pml_ucx.op_attr_nonblocking = 1;
 #if HAVE_DECL_UCP_OP_ATTR_FLAG_MULTI_SEND
     multi_send_op_attr_enable        = 1;
     (void) mca_base_component_var_register(&mca_pml_ucx_component.pmlm_version, "multi_send_nb",
